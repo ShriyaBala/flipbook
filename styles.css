@@ -1,0 +1,389 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    color: #333;
+}
+
+/* Main container */
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+}
+
+/* Search Bar */
+.search-bar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px 24px;
+    border-radius: 30px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.search-bar:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.search-bar input {
+    width: 120px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.search-bar button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.search-bar button:hover {
+    background: #3a7bc8;
+    transform: translateY(-1px);
+}
+
+/* Flipbook container */
+#flipbook-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#flipbook {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/* Page styles */
+.page {
+    background: #fff;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.page-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+.page-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.page-content img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Left side page (image only) */
+.left-page {
+    background: #f8f8f8;
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Right side page (with writing) */
+.right-page {
+    background: #fff;
+    border-left: 1px solid #e0e0e0;
+}
+
+/* Advertisement box on page 17 */
+.ad-box {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    height: 150px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.ad-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.ad-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ad-box::before {
+    content: "Advertisement";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 10px;
+    color: #999;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Advertisement page */
+.ad-page {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ad-page::before {
+    content: "Advertisement";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    color: #999;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.ad-page img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Hard cover styles */
+.hard {
+    background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.hard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.hard .page-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hard h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hard p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* Page turning effects */
+.turn-page-wrapper {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.turn-page {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Book-like page turning effects */
+.turn-page-wrapper {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transform-origin: left center;
+}
+
+.turn-page {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transform-origin: left center;
+}
+
+/* Page corner fold effect */
+.turn-page-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 50%);
+    z-index: 10;
+}
+
+.turn-page-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 50%);
+    z-index: 10;
+}
+
+/* Page number indicator */
+.page-number {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Loading indicator */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #4a90e2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .search-bar {
+        top: 10px;
+        padding: 8px 16px;
+    }
+    
+    .search-bar input {
+        width: 80px;
+        padding: 8px;
+        font-size: 12px;
+    }
+    
+    .search-bar button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .hard h1 {
+        font-size: 2em;
+    }
+    
+    .hard p {
+        font-size: 1em;
+    }
+    
+    .page-number {
+        bottom: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .ad-box {
+        width: 150px;
+        height: 100px;
+    }
+} 

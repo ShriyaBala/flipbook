@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Flipbook</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Turn.js -->
+  <script src="turn.js-master/turn.js-master/turn.min.js"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="number" id="page-search" min="1" max="116" placeholder="Go to page...">
+      <button id="search-button"><i class="fas fa-search"></i> Go</button>
+    </div>
+
+    <!-- Flipbook Container -->
+    <div id="flipbook-container">
+      <div id="flipbook"></div>
+    </div>
+    
+    <!-- Page Number Indicator -->
+    <div class="page-number">
+      Page <span id="current-page">1</span> of <span id="total-pages">116</span>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
