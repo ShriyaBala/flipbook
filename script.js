@@ -87,19 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
     currentPage++;
   }
 
-  // Add a special advertisement box after the last page
-  const specialAdPage = document.createElement('div');
-  specialAdPage.className = 'page special-advertisement-page';
-  specialAdPage.innerHTML = `
-      <div class="special-ad-content">
-          <h3>Special Advertisement</h3>
-          <video class="ad-video" controls autoplay loop muted>
-              <source src="ads/special-ad.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-          </video>
-      </div>
-  `;
-  flipbook.appendChild(specialAdPage);
+  
+
 }
 
   // Initialize the flipbook
