@@ -15,7 +15,51 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   console.log('turn.js is loaded successfully');
 
-  
+  document.addEventListener("DOMContentLoaded", () => {
+    const pages = document.querySelectorAll("#flipbook .page");
+    let currentPage = 0;
+
+    // Function to show the current page
+    function showPage(index) {
+        pages.forEach((page, i) => {
+            page.classList.toggle("active", i === index);
+        });
+    }
+
+    // Show the first page initially
+    showPage(currentPage);
+
+    // Add navigation functionality
+    document.getElementById("searchBtn").addEventListener("click", () => {
+        const pageNumber = parseInt(document.getElementById("pageSearch").value, 10) - 1;
+        if (pageNumber >= 0 && pageNumber < pages.length) {
+            currentPage = pageNumber;
+            showPage(currentPage);
+        }
+    });
+
+    // Optional: Add swipe navigation for mobile
+    let startX = 0;
+    document.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+    });
+    document.addEventListener("touchend", (e) => {
+        const endX = e.changedTouches[0].clientX;
+        if (endX < startX - 50) {
+            // Swipe left (next page)
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        } else if (endX > startX + 50) {
+            // Swipe right (previous page)
+            if (currentPage > 0) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+    });
+});
 
   // Configuration
   const config = {
@@ -35,109 +79,112 @@ document.addEventListener('DOMContentLoaded', function() {
     humanDetailPages: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115]
   };
 
-  // Create pages for the flipbook
-  function createPages() {
-  console.log('Creating pages...');
-  const flipbook = document.getElementById('flipbook');
-
-  let currentPage = 1; // Track the current page number in the book
-
-  for (let i = 1; i <= config.totalPages; i++) {
-    // Format the page number with leading zeros
-    const pageNum = String(i).padStart(4, '0');
-
-    // Check if the current page is 20 or 21 and swap their content
-    let swappedPageNum = pageNum;
-    if (currentPage === 20) {
-      swappedPageNum = String(21).padStart(4, '0'); // Use page 21's content for page 20
-    } else if (currentPage === 21) {
-      swappedPageNum = String(20).padStart(4, '0'); // Use page 20's content for page 21
-    }
-
-    // Check if the current page should be an advertisement
-    if ([16, 18].includes(currentPage)) {
-      const adPage = document.createElement('div');
-      adPage.className = 'page advertisement-page';
-      adPage.innerHTML = `
-          <div class="ad-content">
-              <h3>Advertisement</h3>
-              <p>Your advertisement content here</p>
-          </div>
-          <div class="page-number">Advertisement</div>
-      `;
-      flipbook.appendChild(adPage);
-
-      // Increment the page number for the ad
-      currentPage++;
-      continue; // Skip adding a regular page for this iteration
-    }
-
-    // Create a single page with one image
-    const page = document.createElement('div');
-    page.className = 'page';
-    page.innerHTML = `
-        <img src="flipbook/pages/ilovepdf_pages-to-jpg (1)/directory inner_page-${swappedPageNum}.jpg" alt="Page ${currentPage}" class="page-image">
-        <div class="page-number">Page ${currentPage}</div>
-    `;
-
-    // Add page to flipbook
-    flipbook.appendChild(page);
-
-    // Increment the page number for the content page
-    currentPage++;
-  }
-
-  
-
-}
-
-  // Initialize the flipbook
+  // Initialize everything
   function initFlipbook() {
-    console.log('Initializing flipbook...');
-    
-    // Create pages
+    const flipbook = $('#flipbook');
+    const isMobile = window.innerWidth <= 768;
+    const popupVideo = $('.popup-video');
+    const mainVideo = $('.ad-page video').first();
+    const loadingIndicator = $('.loading-indicator');
+
+    // Show loading indicator
+    loadingIndicator.show();
+
+    // Create pages for the flipbook
+    function createPages() {
+        // Clear existing pages except the first two ad pages
+        flipbook.find('.page:not(.ad-page)').remove();
+
+        // Add book pages
+        for (let i = 1; i <= 116; i++) {
+            const pageNum = String(i).padStart(4, '0');
+            const page = $('<div>', {
+                class: 'page',
+                html: `<img src="flipbook/pages/ilovepdf_pages-to-jpg (1)/directory inner_page-${pageNum}.jpg" alt="Page ${i}">`
+            });
+            flipbook.append(page);
+        }
+    }
+
+    // Create pages first
     createPages();
     
-    // Initialize turn.js
-    $('#flipbook').turn({
-      width: 1000,
-      height: 600,
-      autoCenter: true,
-      acceleration: true,
-      gradients: true,
-      elevation: 50,
-      duration: 1200,
-      when: {
-        turning: function(event, page, view) {
-          console.log('Turning to page:', page);
-          // Add or remove flipbook-flipped class based on page number
-          if (page > 1) {
-            $('body').addClass('flipbook-flipped');
-          } else {
-            $('body').removeClass('flipbook-flipped');
-          }
+    // Initialize turn.js with appropriate settings
+    flipbook.turn({
+        width: isMobile ? window.innerWidth : 1000,
+        height: isMobile ? window.innerHeight : 600,
+        autoCenter: true,
+        display: isMobile ? 'single' : 'double',
+        acceleration: true,
+        gradients: true,
+        elevation: 50,
+        duration: 1200,
+        when: {
+            start: function(event, pageObject, corner) {
+                // Show popup video when user starts flipping
+                if (isMobile) {
+                    // Copy the video source from the main video
+                    const videoSource = mainVideo.find('source').attr('src');
+                    popupVideo.find('video source').attr('src', videoSource);
+                    popupVideo.find('video')[0].load();
+                    
+                    // Show the popup video
+                    popupVideo.addClass('active');
+                    
+                    // Hide the main video
+                    mainVideo.hide();
+                }
+            },
+            end: function(event, pageObject) {
+                // If we're back on the first page, hide popup and show main video
+                if (pageObject.page === 1 && isMobile) {
+                    popupVideo.removeClass('active');
+                    mainVideo.show();
+                }
+                // Update page indicator
+                $('#currentPage').text(pageObject.page);
+            }
         }
-      }
+    });
+      
+    // Handle window resize
+    $(window).on('resize', function() {
+        const isMobileNow = window.innerWidth <= 768;
+        flipbook.turn('size', isMobileNow ? window.innerWidth : 1000, isMobileNow ? window.innerHeight : 600);
+        flipbook.turn('display', isMobileNow ? 'single' : 'double');
     });
 
-    // Add search functionality
+    // Navigation buttons
+    $('#prevPage').on('click', function() {
+        flipbook.turn('previous');
+    });
+
+    $('#nextPage').on('click', function() {
+        flipbook.turn('next');
+    });
+
+    // Search functionality
     $('#searchBtn').on('click', function() {
-      const pageNum = parseInt($('#pageSearch').val());
-      if (pageNum && pageNum >= 1 && pageNum <= config.totalPages) {
-        // Calculate the actual page number including ad pages
-        const actualPage = pageNum + Math.floor((pageNum - 1) / 4); // Add one ad page for every 4 content pages
-        $('#flipbook').turn('page', actualPage);
-      } else {
-        alert('Please enter a valid page number between 1 and ' + config.totalPages);
-      }
+        const pageNum = parseInt($('#pageSearch').val());
+        if (pageNum && pageNum >= 1 && pageNum <= 116) {
+            flipbook.turn('page', pageNum);
+        }
     });
 
-    // Add Enter key support for search
+    // Handle Enter key in search
     $('#pageSearch').on('keypress', function(e) {
-      if (e.which === 13) { // Enter key
-        $('#searchBtn').click();
-      }
+        if (e.which === 13) {
+            $('#searchBtn').click();
+        }
     });
+
+    // Hide loading indicator when everything is ready
+    $(window).on('load', function() {
+        loadingIndicator.hide();
+    });
+
+    // Initial page setup
+    $('.page').css('visibility', 'visible');
 
     // Add realistic page turning with corner dragging
     $('#flipbook').on('mousedown', function(e) {
@@ -179,7 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Initialize everything
-  console.log('Starting initialization...');
-  initFlipbook();
+  // Initialize when DOM is ready
+  $(document).ready(function() {
+    initFlipbook();
+  });
 });

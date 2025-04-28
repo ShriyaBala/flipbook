@@ -1,3 +1,12 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --background-color: #f5f6fa;
+    --text-color: #2c3e50;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,332 +14,223 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
     overflow: hidden;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100vh; /* Full viewport height */
 }
 
-.container {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100%; /* Full height of the viewport */
-    width: 100%; /* Full width of the viewport */
-}
-
-.book-layout {
-    display: flex; /* Align the book and ad box side by side */
-    align-items: stretch; /* Ensure both elements stretch to the same height */
-    gap: 0; /* Remove any gap between the book and the ad box */
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative; /* Allow absolute positioning of the ad box */
-}
-
-#flipbook {
-    width: 800px; /* Set the width of the book */
-    height: 600px; /* Match the height of the ad box */
-    display: flex;
-    flex-direction: column;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.spread {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    background: white;
-}
-
-.page {
+.app-container {
     position: relative;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #fff;
-    border: 1px solid #ddd;
-    overflow: hidden;
-}
-
-.left-page {
-    width: 50%;
-    height: 100%;
-    border-right: 1px solid #ddd;
-}
-
-.right-page {
-    width: 50%;
-    height: 100%;
-    border-left: 1px solid #ddd;
-}
-
-.page img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    margin: 0 auto;
-    z-index: 1;
-}
-
-.page-wrapper {
-    -webkit-perspective: 2000px;
-    perspective: 2000px;
-}
-
-.page-wrapper .page {
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-}
-
-.page-content {
-    padding: 20px;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    background: #fff;
-}
-
-.page-content img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.page-content .details {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-.advertisement-page {
-    background-color: #f8f8f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #f8f8f8 0%, #e0e0e0 100%);
-}
-
-.advertisement-page h3 {
-    color: #333;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.advertisement-page p {
-    color: #666;
-}
-
-.advertisement-page .ad-content {
-  margin: 0; /* Remove any default margin */
-  padding: 0; /* Remove any default padding */
-  position: relative;
-  left: -10px; /* Adjust this value to make it touch the book */
-  width: calc(100% + 10px); /* Extend the width to cover the gap */
-}
-
-/* Book spine effect */
-#flipbook .hard {
-    background: #333;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Page turning animation */
-#flipbook .page-wrapper {
-    transition: transform 0.6s;
-}
-
-#flipbook .page-wrapper:hover {
-    transform: scale(1.02);
-}
-
-/* Touch/click areas for page turning */
-.left-page {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M20 24l-8-8 8-8z" fill="black"/></svg>') 16 16, auto;
-}
-
-.right-page {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M12 24l8-8-8-8z" fill="black"/></svg>') 16 16, auto;
-}
-
-/* Ensure proper image scaling */
-.page img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-.book-viewer {
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.page-container {
-    display: flex;
-    height: 80vh;
-}
-
-.advertisement-side {
-    width: 30%;
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.ad-content {
-  margin-left: -10px; /* Adjust this value as needed */
-}
-
-.pdf-side {
-    width: 70%;
-    padding: 20px;
-    overflow: auto;
-}
-
-#pdf-canvas {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-.controls {
+/* Navigation Controls */
+.navigation-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-button {
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
-    background-color: #4CAF50;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    z-index: 1000;
+}
+
+.nav-btn {
+    background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-button:hover {
-    background-color: #45a049;
+.nav-btn:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
 }
 
-input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.page-indicator {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
+/* Search Container */
 .search-container {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
     display: flex;
     gap: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
-    border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    z-index: 1000;
 }
 
 #pageSearch {
+    width: 100px;
     padding: 8px 15px;
-    border: 1px solid #ddd;
+    border: 2px solid var(--primary-color);
     border-radius: 20px;
     font-size: 14px;
-    width: 150px;
     outline: none;
+    transition: all 0.3s ease;
+}
+
+#pageSearch:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
 }
 
 #searchBtn {
-    padding: 8px 20px;
-    background-color: #3498db;
+    background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 #searchBtn:hover {
-    background-color: #2980b9;
+    background: var(--secondary-color);
+    transform: scale(1.1);
 }
 
-.page-number {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.special-ad-container {
-    position: absolute; /* Position the ad box absolutely */
-    left: 0; /* Align it with the left edge of the book */
-    top: 0;
-    width: 500px; /* Increase the width of the ad box */
-    height: 700px; /* Increase the height of the ad box */
-    background: rgba(255, 255, 255, 0.95);
-    z-index: 1000; /* Ensure it appears above other elements */
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-right: 3px solid #ffa500; /* Add a border to visually separate the ad box */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth hide/show */
-    opacity: 1; /* Fully visible by default */
-    visibility: visible; /* Ensure it's visible initially */
-}
-
-.special-ad-container.hidden {
-    opacity: 0; /* Make it invisible */
-    visibility: hidden; /* Hide it completely */
-}
-
-.special-ad-box h3 {
-    font-size: 20px;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.ad-video {
+/* Book Layout */
+.book-layout {
     width: 100%;
-    height: auto;
-    border: 2px solid #ffa500;
-    border-radius: 8px;
-    object-fit: cover; /* Ensure the video scales properly */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+#flipbook {
+    width: 1000px;
+    height: 600px;
+    background: white;
+}
+
+.page {
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.page img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Pop-up video styles */
+.popup-video {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 160px;
+    height: 120px;
+    z-index: 1000;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    display: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.popup-video.active {
+    display: block;
+}
+
+.popup-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    display: none;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary-color);
+    border-top: 5px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .navigation-controls {
+        bottom: 10px;
+        padding: 8px 15px;
+    }
+
+    .nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .search-container {
+        top: 10px;
+        padding: 8px 15px;
+    }
+
+    #flipbook {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+
+    .page {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+
+    .popup-video {
+        width: 120px;
+        height: 90px;
+        bottom: 10px;
+        left: 10px;
+    }
 }

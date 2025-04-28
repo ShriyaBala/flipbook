@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="turn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Ensure all pages (videos and images) have the same size */
         .page {
@@ -21,36 +22,79 @@
             max-height: 100%;
             object-fit: cover;
         }
+
+        /* Pop-up video styles */
+        .popup-video {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 120px;
+            height: 90px;
+            z-index: 1000;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .popup-video.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <input type="number" id="pageSearch" min="1" placeholder="Enter page number...">
-        <button id="searchBtn">Go to Page</button>
-    </div>
-    <div class="book-layout">
-        <div id="flipbook">
-            <!-- Advertisement Page (Left Side) -->
-            <div class="page ad-page">
-              <video controls autoplay muted loop>
+    <div class="app-container">
+        <!-- Navigation Controls -->
+        <div class="navigation-controls">
+            <button id="prevPage" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+            <div class="page-indicator">
+                <span id="currentPage">1</span> / <span id="totalPages">116</span>
+            </div>
+            <button id="nextPage" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <!-- Search Container -->
+        <div class="search-container">
+            <input type="number" id="pageSearch" min="1" placeholder="Go to page...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- Book Container -->
+        <div class="book-layout">
+            <div id="flipbook">
+                <!-- Advertisement Page (Left Side) -->
+                <div class="page ad-page">
+                    <video controls autoplay muted loop>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <!-- Placeholder Page (Right Side) -->
+                <div class="page placeholder-page"></div>
+
+                <!-- Advertisement Page (Left Side) -->
+                <div class="page ad-page">
+                    <video controls autoplay muted loop>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <!-- Placeholder Page (Right Side) -->
+                <div class="page placeholder-page"></div>
+            </div>
+        </div>
+
+        <!-- Pop-up video container -->
+        <div class="popup-video">
+            <video controls autoplay muted loop>
                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                 Your browser does not support the video tag.
-              </video>
-            </div>
-            <!-- Placeholder Page (Right Side) -->
-            <div class="page placeholder-page"></div>
+            </video>
+        </div>
 
-            <!-- Advertisement Page (Left Side) -->
-            <div class="page ad-page">
-              <video controls autoplay muted loop>
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <!-- Placeholder Page (Right Side) -->
-            <div class="page placeholder-page"></div>
-
-            <!-- Add more advertisement and book pages as needed -->
+        <!-- Loading Indicator -->
+        <div class="loading-indicator">
+            <div class="spinner"></div>
         </div>
     </div>
     <script src="script.js"></script>
