@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentPage = $(`#flipbook .page:nth-child(${page})`);
             const pageType = currentPage.data('page-type');
             const pageNumber = currentPage.data('page-number');
-            const totalPage = currentPage.data('total-page');
             
             // Update the page indicator
             if (pageType === 'content') {
@@ -200,16 +199,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const popupVideoElement = popupVideo.find('video')[0];
                 
                 if (currentVideo && popupVideoElement) {
-                    // Copy video source to popup
                     popupVideoElement.src = currentVideo.src;
                     popupVideoElement.load();
-                    
-                    // Show popup and hide main video
                     popupVideo.show();
                     $(currentVideo).hide();
                 }
             } else if (page === 1) {
-                // Return to first page
                 popupVideo.hide();
                 const firstVideo = $('#flipbook .page:nth-child(1) video')[0];
                 if (firstVideo) {
@@ -240,8 +235,14 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#searchBtn').on('click', function() {
       const pageNum = parseInt($('#pageSearch').val(), 10);
       if (pageNum && pageNum >= 1 && pageNum <= config.totalBookPages) {
-        // Find the target page element
-        const targetPage = $(`#flipbook .page[data-page-type="content"][data-page-number="${pageNum}"]`);
+        // Find all content pages
+        const contentPages = $('#flipbook .page[data-page-type="content"]');
+        
+        // Find the target page
+        const targetPage = contentPages.filter(function() {
+            return $(this).data('page-number') === pageNum;
+        });
+        
         if (targetPage.length) {
             const pageIndex = targetPage.data('total-page');
             flipbook.turn('page', pageIndex);
@@ -249,8 +250,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    $('#pageSearch').on('keypress', function (e) {
-      if (e.which === 13) {
+    $('#pageSearch').on('keypress', function(e) {
+      if (e.which === 13) { // Enter key
         $('#searchBtn').click();
       }
     });
